@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
 
 /**
@@ -53,11 +54,12 @@ public class EmployeeDatabase {
      * @return int
      */
     public int countManagersAbove(final Employee employee) {
-        /*
-         * Implement this function
-         */
-    }
+        if (this.findManager(employee) == null) {
+            return 0;
+        }
 
+        return 1 + countManagersAbove(this.findManager(employee));
+    }
     /**
      * Count the number of employees under this manager.
      * <p>
@@ -67,9 +69,14 @@ public class EmployeeDatabase {
      * @return int
      */
     public int countEmployeesUnder(final Employee employee) {
-        /*
-         * Implement this function
-         */
+        int total = 0;
+        for (int i = 0; i < employees.size(); i++) {
+            if (this.findManager(employees.get(i)).equals(employee)) {
+                total += 1 + countEmployeesUnder(employees.get(i));
+            }
+        }
+        return total;
+
     }
 
     /**
