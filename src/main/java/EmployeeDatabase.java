@@ -71,6 +71,9 @@ public class EmployeeDatabase {
     public int countEmployeesUnder(final Employee employee) {
         int total = 0;
         for (int i = 0; i < employees.size(); i++) {
+            if (this.findManager(employees.get(i)) == null) {
+                continue;
+            }
             if (this.findManager(employees.get(i)).equals(employee)) {
                 total += 1 + countEmployeesUnder(employees.get(i));
             }
